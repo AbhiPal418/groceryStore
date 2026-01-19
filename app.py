@@ -72,9 +72,6 @@ class OrderItem(db.Model):
 
 
 def fine(s):
-    if 'user_id' not in session:
-        return redirect('/login')
-    
     ans = ""
     for ch in s:
         if(ch >= '0' and ch <= '9'):
@@ -119,7 +116,7 @@ def admin_login():
 
         if admin and check_password_hash(admin.password, request.form['password']):
             session['admin'] = admin.username
-            return redirect('/admin-dashboard')
+            return redirect(url_for('admin_dashboard'))
         else:
             return render_template('invalid_login.html')
         
@@ -131,7 +128,7 @@ def admin_login():
 @app.route('/add-product', methods=['GET', 'POST'])
 def add_product():
     if 'admin' not in session:
-        return redirect('/admin-login')
+        return redirect(url_for('admin_login'))
 
     if request.method == 'POST':
         product = Product(
@@ -142,7 +139,7 @@ def add_product():
         )
         db.session.add(product)
         db.session.commit()
-        return redirect('/admin-dashboard')
+        return redirect(url_for('admin_dashboard'))
 
     return render_template('add_product.html')
 
@@ -152,7 +149,7 @@ def add_product():
 @app.route("/bulk-add", methods=["POST"])
 def bulk_add():
     if 'admin' not in session:
-        return redirect('/admin-login')
+        return redirect(url_for('admin_login'))
 
     file = request.files.get('file')
 
@@ -172,7 +169,7 @@ def bulk_add():
         db.session.add(product)
 
     db.session.commit()
-    return redirect('/admin-dashboard')
+    return redirect(url_for('admin_dashboard'))
 
 
 
@@ -180,7 +177,7 @@ def bulk_add():
 @app.route('/admin-dashboard')
 def admin_dashboard():
     if 'admin' not in session:
-        return redirect('/admin-login')
+        return redirect(url_for('admin_login'))
 
     products = Product.query.all()
     orders = Order.query.order_by(Order.id.desc()).all()
@@ -210,7 +207,7 @@ def signup():
         db.session.add(customer)
         db.session.commit()
 
-        return redirect('/login')
+        return redirect(url_for('login'))
 
     return render_template('signup.html')
 
@@ -228,7 +225,7 @@ def login():
         if user and check_password_hash(user.password, password):
             session['user_id'] = user.id
             session['user_name'] = user.name
-            return redirect('/customer-dashboard')
+            return redirect(url_for('customer_dashboard'))
         else:
             return render_template('invalid_login.html')
 
@@ -239,13 +236,13 @@ def login():
 
 @app.route("/choose-login")
 def func():
-    return render_template('chooseLogin.html')
+    return render_template('choose_login.html')
 
 
 @app.route("/customer-dashboard")
-def dashboard():
+def customer_dashboard():
     if 'user_id' not in session:
-        return redirect('/login')
+        return redirect(url_for('login'))
 
     query = request.args.get('q')  # 🔍 search text
     user_id = session['user_id']
@@ -274,7 +271,7 @@ def dashboard():
 def logout():
     session.pop('user_id', None)
     session.pop('user_name', None)
-    return redirect('/login')
+    return redirect(url_for('login'))
 
 
 
@@ -282,7 +279,7 @@ def logout():
 @app.route("/add-to-cart/<int:product_id>")
 def add_to_cart(product_id):
     if 'user_id' not in session:
-        return redirect('/login')
+        return redirect(url_for('login'))
 
     user_id = session['user_id']
 
@@ -302,7 +299,7 @@ def add_to_cart(product_id):
         db.session.add(cart_item)
 
     db.session.commit()
-    return redirect('/customer-dashboard')
+    return redirect(url_for('customer_dashboard'))
 
 
 
@@ -312,7 +309,7 @@ def add_to_cart(product_id):
 @app.route("/cart")
 def cart():
     if 'user_id' not in session:
-        return redirect('/login')
+        return redirect(url_for('login'))
 
     user_id = session['user_id']
     cart_items = Cart.query.filter_by(user_id=user_id).all()
@@ -337,7 +334,7 @@ def cart():
 @app.route("/place-order")
 def place_order():
     if 'user_id' not in session:
-        return redirect('/login')
+        return redirect(url_for('login'))
 
     user_id = session['user_id']
 
@@ -345,7 +342,7 @@ def place_order():
     cart_items = Cart.query.filter_by(user_id=user_id).all()
 
     if not cart_items:
-        return redirect('/cart')
+        return redirect(url_for('cart'))
 
     # 2️ Calculate total
     total = 0
@@ -389,7 +386,7 @@ def place_order():
 @app.route("/delete-order/<int:order_id>")
 def delete_order(order_id):
     if 'admin' not in session:
-        return redirect('/admin-login')
+        return redirect(url_for('admin_login'))
 
     order = Order.query.get_or_404(order_id)
 
@@ -399,7 +396,7 @@ def delete_order(order_id):
     db.session.delete(order)
     db.session.commit()
 
-    return redirect('/admin-dashboard')
+    return redirect(url_for('admin_dashboard'))
 
 
 
@@ -408,7 +405,7 @@ def delete_order(order_id):
 @app.route("/remove/<int:cart_id>")
 def remove(cart_id):
     if 'user_id' not in session:
-        return redirect('/login')
+        return redirect(url_for('login'))
 
     item = Cart.query.filter_by(
         id=cart_id,
@@ -418,7 +415,7 @@ def remove(cart_id):
     db.session.delete(item)
     db.session.commit()
 
-    return redirect('/cart')
+    return redirect(url_for('cart'))
 
 
 
@@ -426,7 +423,7 @@ def remove(cart_id):
 @app.route("/delete-product/<int:product_id>")
 def delete_product(product_id):
     if 'admin' not in session:
-        return redirect('/admin-login')
+        return redirect(url_for('admin_login'))
 
     product = Product.query.get_or_404(product_id)
 
@@ -436,14 +433,14 @@ def delete_product(product_id):
     db.session.delete(product)
     db.session.commit()
 
-    return redirect('/admin-dashboard')
+    return redirect(url_for('admin_dashboard'))
 
 
 
 @app.route("/increase/<int:cart_id>")
 def increase(cart_id):
     if 'user_id' not in session:
-        return redirect('/login')
+        return redirect(url_for('login'))
 
     item = Cart.query.filter_by(
         id=cart_id,
@@ -453,14 +450,14 @@ def increase(cart_id):
     item.quantity += 1
     db.session.commit()
 
-    return redirect('/cart')
+    return redirect(url_for('cart'))
 
 
 
 @app.route("/decrease/<int:cart_id>")
 def decrease(cart_id):
     if 'user_id' not in session:
-        return redirect('/login')
+        return redirect(url_for('login'))
 
     item = Cart.query.filter_by(
         id=cart_id,
@@ -476,7 +473,12 @@ def decrease(cart_id):
         db.session.delete(item)
         db.session.commit()
 
-    return redirect('/cart')
+    return redirect(url_for('cart'))
+
+
+@app.route("/routes")
+def routes():
+    return "<br>".join(str(rule) for rule in app.url_map.iter_rules())
 
 
 
