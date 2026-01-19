@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invalid Login | My Grocery</title>
+    <link rel="stylesheet" href="/static/css/invalid_login.css">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}?v=999">
+</head>
+
+<body>
+    <div class="login-container">
+        <div class="icon-box">⚠️</div>
+
+        <h2>Invalid Login Attempt</h2>
+        <p>The username or password you entered is incorrect. Please try again to access your account.</p>
+
+        <div class="btn-group">
+            <a href="/login" class="btn btn-customer">Login As Customer</a>
+            <a href="/admin-login" class="btn btn-admin">Login As Administrator</a>
+        </div>
+    </div>
+</body>
+
+</html>

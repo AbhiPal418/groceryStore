@@ -1,0 +1,123 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+:root {
+    --admin-dark: #1b3318;
+    --primary-green: #2d5a27;
+    --accent-lime: #8bc34a;
+    --bg-soft: #f4f7f1;
+    --white: #ffffff;
+}
+
+body {
+    margin: 0;
+    padding: 40px 20px;
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-soft);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* --- Wrapper for both forms --- */
+.admin-container {
+    width: 100%;
+    max-width: 500px;
+}
+
+/* --- Card Styling --- */
+.card {
+    background: var(--white);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    margin-bottom: 30px;
+    border: 1px solid #edf2ed;
+}
+
+h2 {
+    color: var(--admin-dark);
+    font-size: 1.4rem;
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* --- Form Elements --- */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="file"] {
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    border: 2px solid #f0f4f0;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+    transition: 0.3s;
+}
+
+input:focus {
+    border-color: var(--accent-lime);
+    background-color: #f9fff8;
+}
+
+/* --- Styling File Upload --- */
+input[type="file"] {
+    background: #fdfdfd;
+    cursor: pointer;
+}
+
+/* --- Buttons --- */
+button {
+    background: var(--primary-green);
+    color: white;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background: var(--admin-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background: #e0e6e0;
+    margin: 10px 0 30px 0;
+}
+
+.back-link {
+    display: block;
+    text-align: center;
+    color: #666;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.back-link:hover {
+    color: var(--primary-green);
+}
+
+/* Special styling for Bulk Button to differentiate */
+.bulk-btn {
+    background: #546e7a; /* Slate Blue/Grey for distinct action */
+}
+
+.bulk-btn:hover {
+    background: #37474f;
+}

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Fresh Cart</title>
+    <link rel="stylesheet" href="/static/css/cart.css">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}?v=999">
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="stepper">
+            <div class="step active"><span>1</span> Cart</div>
+            <div class="step-line"></div>
+            <div class="step"><span>2</span> Delivery</div>
+            <div class="step-line"></div>
+            <div class="step"><span>3</span> Payment</div>
+        </div>
+
+        <div class="cart-header">
+            <h2>🛒 My Shopping Basket</h2>
+        </div>
+
+        {% if cart_items %}
+        <div class="cart-layout">
+            <div class="table-section">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Price</th>
+                            <th>Qty</th>
+                            <th>Subtotal</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in cart_items %}
+                        <tr>
+                            <td class="product-name">
+                                <div class="item-icon">🥦</div>
+                                {{ item.product.name }}
+                            </td>
+                            <td>₹{{ item.product.price }}</td>
+                            <td>
+                                <div class="qty-control">
+                                    <a href="{{ url_for('decrease', cart_id=item.id) }}">−</a>
+                                    <span class="qty-num">{{ item.quantity }}</span>
+                                    <a href="{{ url_for('increase', cart_id=item.id) }}">+</a>
+                                </div>
+                            </td>
+                            <td class="subtotal">₹{{ item.unit_price * item.quantity }}</td>
+                            <td>
+                                <a class="remove" href="{{ url_for('remove', cart_id=item.id) }}">Remove</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="summary-card">
+                <h3>Order Summary</h3>
+
+                <div class="summary-row">
+                    <span>Items Count:</span>
+                    <span>{{ cart_items|length }}</span>
+                </div>
+
+                <div class="summary-row">
+                    <span>Delivery Charge:</span>
+                    <span id="delivery-charge" class="free">Free</span>
+                </div>
+
+
+                <!-- 🔹 Delivery Option -->
+                <hr>
+                <h4>Delivery Option</h4>
+                <div class="option-group">
+                    <label>
+                        <input type="radio" name="delivery_option" value="store" checked>
+                        Pick from Store
+                    </label><br>
+                    <label>
+                        <input type="radio" name="delivery_option" value="home">
+                        Home Delivery
+                    </label>
+                </div>
+
+
+                <!-- 🔹 Payment Option -->
+                <hr>
+                <h4>Payment Method</h4>
+                <div class="option-group">
+                    <label>
+                        <input type="radio" name="payment_option" value="online" checked>
+                        Online Payment
+                    </label><br>
+                    <label>
+                        <input type="radio" name="payment_option" value="offline">
+                        Offline Payment (Cash on Delivery)
+                    </label>
+                </div>
+
+                <hr>
+                <div class="total-row">
+                    <span>Total Amount:</span>
+                    <span class="total-price" id="total-amount">₹{{ total }}</span>
+
+                </div>
+
+                <div class="order-actions">
+                    <a href="{{ url_for('place_order') }}" class="place-order-btn">
+                        Checkout Securely 🔒
+                    </a>
+                </div>
+
+                <p class="secure-text">✅ Freshness Guaranteed</p>
+            </div>
+
+        </div>
+
+        {% else %}
+        <div class="empty-cart">
+            <div class="empty-icon">🧺</div>
+            <p>Your basket is looking a bit lonely.</p>
+        </div>
+        {% endif %}
+
+        <a href="/customer-dashboard" class="back-link">← Add More Groceries</a>
+    </div>
+
+
+    <section class="previous-orders">
+        <h2>📦 Order History</h2>
+        <div style="overflow-x: auto;">
+            <table class="orders-table">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Date</th>
+                        <th>Total Amount</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in orders %}
+                    <tr>
+                        <td class="order-id">#{{ order.id }}</td>
+                        <td>{{ order.date.strftime('%d %b %Y') }}</td>
+                        <td class="order-total">₹{{ order.total_amount }}</td>
+                        <td>
+                            <span class="status {{ order.status|lower }}">
+                                {{ order.status }}
+                            </span>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+
+    <script>
+        const deliveryRadios = document.querySelectorAll('input[name="delivery_option"]');
+        const deliveryChargeEl = document.getElementById('delivery-charge');
+        const totalAmountEl = document.getElementById('total-amount');
+        // console.log(totalAmountEl);
+
+        const baseTotal = {{ total }}; // Flask total without delivery
+
+        console.log(baseTotal);
+        deliveryRadios.forEach(radio => {
+            radio.addEventListener('change', () => {
+                let deliveryCharge = 0;
+
+                if (radio.value === 'home') {
+                    deliveryCharge = 15;
+                    deliveryChargeEl.innerText = "₹15";
+                    deliveryChargeEl.classList.remove('free');
+                } else {
+                    deliveryCharge = 0;
+                    deliveryChargeEl.textContent = "Free";
+                    deliveryChargeEl.classList.add('free');
+                }
+
+                totalAmountEl.textContent = "₹" + (baseTotal + deliveryCharge);
+            });
+        });
+    </script>
+
+</body>
+
+</html>

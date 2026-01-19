@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/static/css/dashboard.css">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}?v=999">
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <div class="navbar">
+        <h2>My Grocery</h2>
+
+        <div class="cart-box">
+            <a href="/cart">🛒 Cart</a>
+            {% if cart_count > 0 %}
+            <span class="badge">{{ cart_count }}</span>
+            {% endif %}
+        </div>
+
+
+
+    </div>
+    <!-- HERO SEARCH SECTION -->
+    <div class="hero">
+        <h1>Buy Online or Pick From Store</h1>
+
+        <form method="get" action="/customer-dashboard" class="search-bar">
+            <input type="text" name="q" placeholder="Search for products..." value="{{ search_query if search_query }}">
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
+    <!-- MAIN -->
+    <div class="main">
+
+        <!-- PRODUCTS -->
+        <div class="products">
+            {% for product in products %}
+            <div class="card">
+                <img src="/static/images/{{ product.image }}" alt="{{ product.name }}"
+                    class="{% if product.stock == '0' %}out-of-stock-img{% endif %}">
+
+                <h4>{{ product.name }}</h4>
+                <p>₹{{ product.price }}</p>
+
+                {% if product.stock != '0' %}
+                <a href="/add-to-cart/{{ product.id }}" class="btn">Add to Cart</a>
+                {% else %}
+                <span class="out">Unavailable</span>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+
+
+
+        <!-- MINI CART (FLIPKART STYLE) -->
+        <div class="mini-cart">
+            <h3>Your Cart</h3>
+
+            {% if cart_items %}
+            {% for item in cart_items %}
+            <div class="mini-item">
+                <span>{{ item.product.name }}</span>
+                <span>x {{ item.quantity }}</span>
+            </div>
+            {% endfor %}
+
+            <a href="/cart" class="view-cart">View Full Cart</a>
+            {% else %}
+            <p>No items added</p>
+            {% endif %}
+        </div>
+
+    </div>
+
+</body>
+
+</html>

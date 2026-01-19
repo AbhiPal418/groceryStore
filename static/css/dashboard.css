@@ -1,0 +1,197 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --primary-green: #2d5a27;
+    --accent-lime: #8bc34a;
+    --text-main: #2d3436;
+    --bg-light: #f9fbf9;
+    --white: #ffffff;
+    --danger: #ff5252;
+}
+
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-light);
+    color: var(--text-main);
+}
+
+/* --- Professional Navbar --- */
+.navbar {
+    background: var(--white);
+    padding: 12px 6%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+}
+
+.navbar h2 {
+    color: var(--primary-green);
+    font-weight: 700;
+    margin: 0;
+}
+
+.cart-box a {
+    text-decoration: none;
+    font-size: 1.2rem;
+    padding: 10px 15px;
+    background: #f0f7ef;
+    border-radius: 12px;
+    transition: 0.3s;
+}
+
+.badge {
+    background: var(--danger);
+    color: white;
+    font-size: 12px;
+    padding: 2px 8px;
+    border-radius: 20px;
+    margin-left: 5px;
+}
+
+/* --- Hero Section --- */
+.hero {
+    background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
+                url('https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1200&q=80');
+    background-size: cover;
+    background-position: center;
+    padding: 80px 5%;
+    text-align: center;
+    color: white;
+}
+
+.hero h1 { font-size: 2.5rem; margin-bottom: 30px; }
+
+.search-bar {
+    display: flex;
+    max-width: 600px;
+    margin: 0 auto;
+    background: white;
+    padding: 5px;
+    border-radius: 50px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.search-bar input {
+    flex: 1;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 50px;
+    outline: none;
+    font-size: 1rem;
+}
+
+.search-bar button {
+    background: var(--primary-green);
+    color: white;
+    border: none;
+    padding: 10px 30px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+/* --- Main Content --- */
+.main {
+    display: flex;
+    padding: 40px 6%;
+    gap: 30px;
+}
+
+.products {
+    flex: 3;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 25px;
+}
+
+/* --- Product Cards --- */
+.card {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 15px;
+    text-align: center;
+    transition: 0.3s;
+    border: 1px solid #edf2ed;
+    display: flex;
+    flex-direction: column;
+}
+
+.card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+
+.card img {
+    width: 100%;
+    aspect-ratio: 1 / 1; /* Makes all product images squares */
+    object-fit: contain;
+    margin-bottom: 15px;
+    border-radius: 12px;
+}
+
+.card h4 { margin: 10px 0 5px; font-size: 1.1rem; }
+.card p { font-weight: 700; color: var(--primary-green); font-size: 1.2rem; }
+
+.btn {
+    background: var(--accent-lime);
+    color: white;
+    text-decoration: none;
+    padding: 12px;
+    border-radius: 12px;
+    font-weight: 600;
+    margin-top: auto;
+}
+
+/* --- Realistic "Out of Stock" State --- */
+.out {
+    background: #f2f2f2;
+    color: #999;
+    padding: 12px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-top: auto;
+}
+
+.card img.out-of-stock-img {
+    filter: grayscale(1);
+    opacity: 0.6;
+}
+
+/* --- Mini Cart --- */
+.mini-cart {
+    flex: 1;
+    background: var(--white);
+    border-radius: 20px;
+    padding: 25px;
+    height: fit-content;
+    position: sticky;
+    top: 100px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+}
+
+.mini-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #f9f9f9;
+}
+
+.view-cart {
+    display: block;
+    text-align: center;
+    background: var(--primary-green);
+    color: white;
+    text-decoration: none;
+    padding: 12px;
+    border-radius: 12px;
+    margin-top: 20px;
+    font-weight: 600;
+}
+
+@media (max-width: 900px) {
+    .main { flex-direction: column; }
+    .mini-cart { display: none; } 
+}

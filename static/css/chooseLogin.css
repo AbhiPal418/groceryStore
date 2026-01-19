@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+:root {
+    --primary-green: #2d5a27;
+    --accent-lime: #8bc34a;
+    --admin-dark: #1b3318;
+    --bg-soft: #f4f7f1;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background: radial-gradient(circle at center, #ffffff 0%, #e8f0e6 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+h1 {
+    color: var(--primary-green);
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+    font-weight: 700;
+    letter-spacing: -1px;
+}
+
+/* --- Selection Wrapper --- */
+.selection-container {
+    display: flex;
+    gap: 30px;
+    width: 100%;
+    max-width: 700px;
+    padding: 20px;
+}
+
+/* --- Login Cards --- */
+.choice-card {
+    flex: 1;
+    background: white;
+    padding: 50px 30px;
+    border-radius: 25px;
+    text-align: center;
+    text-decoration: none;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 1px solid #edf2ed;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.choice-card:hover {
+    transform: translateY(-15px);
+    box-shadow: 0 20px 50px rgba(45, 90, 39, 0.15);
+    border-color: var(--accent-lime);
+}
+
+.icon {
+    font-size: 50px;
+    margin-bottom: 20px;
+    display: block;
+}
+
+.choice-card h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #333;
+    transition: 0.3s;
+}
+
+.choice-card p {
+    color: #777;
+    font-size: 0.9rem;
+    margin-top: 10px;
+}
+
+/* --- Color Variations --- */
+.customer-choice:hover h2 {
+    color: var(--primary-green);
+}
+
+.admin-choice:hover h2 {
+    color: var(--admin-dark);
+}
+
+/* --- Responsive View --- */
+@media (max-width: 600px) {
+    .selection-container {
+        flex-direction: column;
+    }
+    h1 {
+        font-size: 1.8rem;
+    }
+}

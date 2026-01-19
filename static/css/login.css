@@ -1,0 +1,135 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+:root {
+    --primary-green: #2d5a27;
+    --accent-lime: #8bc34a;
+    --bg-soft: #f4f7f1;
+    --text-grey: #666;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-soft);
+    /* Stunning radial gradient for depth without an image */
+    background: radial-gradient(circle at center, #ffffff 0%, #e8f0e6 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-container {
+    background: white;
+    padding: 50px 40px;
+    border-radius: 25px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
+    width: 100%;
+    max-width: 360px;
+    text-align: center;
+    /* Consistent with the Admin style line */
+    border-top: 6px solid var(--primary-green);
+    transition: transform 0.3s ease;
+}
+
+.login-container:hover {
+    transform: translateY(-5px);
+}
+
+h2 {
+    color: var(--primary-green);
+    margin-bottom: 5px;
+    font-size: 26px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.subtitle {
+    color: var(--text-grey);
+    font-size: 14px;
+    margin-bottom: 30px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Label styling to keep it clean */
+label {
+    text-align: left;
+    font-size: 13px;
+    font-weight: 600;
+    color: #444;
+    margin-bottom: 5px;
+    margin-left: 2px;
+}
+
+input {
+    padding: 14px 18px;
+    margin-bottom: 20px;
+    border: 2px solid #eee;
+    border-radius: 12px;
+    font-size: 15px;
+    font-family: inherit;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+input:focus {
+    border-color: var(--accent-lime);
+    background-color: #f9fff8;
+    box-shadow: 0 0 10px rgba(139, 195, 74, 0.1);
+}
+
+button {
+    background: var(--primary-green);
+    color: white;
+    padding: 16px;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(45, 90, 39, 0.2);
+    margin-top: 10px;
+}
+
+button:hover {
+    background: var(--accent-lime);
+    transform: scale(1.02);
+}
+
+/* The circular icon box from your Admin style */
+.icon-box {
+    width: 70px;
+    height: 70px;
+    background: #eef5ed;
+    color: var(--primary-green);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    font-size: 30px;
+}
+
+.signup-link {
+    display: block;
+    margin-top: 25px;
+    color: var(--text-grey);
+    text-decoration: none;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+.signup-link strong {
+    color: var(--primary-green);
+}
+
+.signup-link:hover {
+    color: #000;
+}

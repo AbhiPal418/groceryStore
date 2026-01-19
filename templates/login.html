@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/login.css">
+    <title>Customer Login</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
+
+</head>
+
+<body>
+
+    <div class="login-container">
+        <div class="icon-box">👤</div>
+
+        <h2>Customer Login</h2>
+        <p class="subtitle">Enter your details to start shopping</p>
+
+        <form method="POST">
+            <input type="email" id="email" name="email" placeholder="Email Address" required>
+            <input type="password" name="password" placeholder="Password" required>
+
+            <button type="submit">Login</button>
+        </form>
+
+        <a href="/signup"
+            style="display: block; margin-top: 20px; color: #666; text-decoration: none; font-size: 14px;">
+            Don't have an account? <strong>Create one</strong>
+        </a>
+    </div>
+
+</body>
+
+</html>

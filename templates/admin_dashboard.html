@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Management</title>
+    <link rel="stylesheet" href="/static/css/admin_dashboard.css">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}?v=999">
+</head>
+
+<body>
+
+    <header class="admin-header">
+        <div class="logo">🌿 FreshMarket <span>Admin</span></div>
+        <div class="header-actions">
+            <a href="/add-product" class="add-btn">➕ Add New Product</a>
+            <a href="/logout" class="logout-link">Logout</a>
+        </div>
+    </header>
+
+    <div class="dashboard-wrapper">
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-icon">💰</span>
+                <div class="stat-info">
+                    <p>Total Revenue</p>
+                    <h3>₹{{ total_revenue if total_revenue else '0' }}</h3>
+                </div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-icon">📦</span>
+                <div class="stat-info">
+                    <p>Total Orders</p>
+                    <h3>{{ orders|length }}</h3>
+                </div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-icon">🍎</span>
+                <div class="stat-info">
+                    <p>Products</p>
+                    <h3>{{ products|length }}</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="section-box">
+                <div class="section-header">
+                    <h2>Inventory Management</h2>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Price</th>
+                                <th>Stock</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for p in products %}
+                            <tr>
+                                <td><strong>{{ p.name }}</strong></td>
+                                <td>₹{{ p.price }}</td>
+                                <td>
+                                    <span >
+                                        {{ p.stock }} kg
+                                    </span>
+                                </td>
+                                <td><a href="/delete-product/{{ p.id }}" class="delete-btn">Delete</a></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="section-box">
+                <div class="section-header">
+                    <h2>Recent Customer Orders</h2>
+                </div>
+                <div class="table-container">
+                    {% if orders %}
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Customer</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in orders %}
+                            <tr>
+                                <td>#{{ order.id }}</td>
+                                <td>{{ order.customer.name }}</td>
+                                <td class="amount">₹{{ order.total_amount }}</td>
+                                <td><span class="status-badge status-{{ order.status|lower }}">{{ order.status }}</span>
+                                </td>
+                                <td>
+                                    <div class="action-group">
+                                        <button class="check-order-btn" onclick="openOrderModal('{{ order.id }}')">
+                                            Check
+                                        </button>
+
+                                        <a href="/delete-order/{{ order.id }}" class="delete-order-link"
+                                            onclick="return confirm('Delete this order?')">
+                                            🗑️
+                                        </a>
+
+                                    </div>
+
+                                    <div id="items-{{ order.id }}" style="display:none;">
+                                        {% for item in order.items %}
+                                        <li>{{ item.product.name }} — {{ item.quantity }} x ₹{{ item.price }}</li>
+                                        {% endfor %}
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                    <div class="empty-state">No orders processed yet.</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="orderModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeOrderModal()">&times;</span>
+            <div class="modal-header">
+                <h3>Order Details</h3>
+                <p>Order ID: #<span id="modal-order-id"></span></p>
+            </div>
+            <hr>
+            <ul id="modal-items-list"></ul>
+            <button class="close-modal-footer" onclick="closeOrderModal()">Close Details</button>
+        </div>
+    </div>
+
+    <script src="/static/js/admin_dashboard.js"></script>
+</body>
+
+</html>

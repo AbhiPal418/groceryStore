@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Inventory | Admin</title>
+    <link rel="stylesheet" href="/static/css/add_product.css">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}?v=999">
+</head>
+<body>
+
+    <div class="admin-container">
+        
+        <div class="card">
+            <h2>➕ Add New Product</h2>
+            <form method="POST">
+                <input type="text" name="name" placeholder="Product name" required>
+                <input type="text" name="price" placeholder="Price (₹)" required>
+                <input type="number" name="stock" placeholder="Initial Stock" required>
+                <input type="text" name="image" placeholder="Image filename (e.g. rice.jpg)">
+                <button type="submit">Add Product</button>
+            </form>
+        </div>
+
+        <hr>
+
+        <div class="card">
+            <h2>📁 Bulk Add (CSV)</h2>
+            <form action="/bulk-add" method="POST" enctype="multipart/form-data">
+                <input type="file" name="file" accept=".csv" required>
+                <button type="submit" class="bulk-btn">Upload & Process CSV</button>
+            </form>
+        </div>
+
+        <a href="/admin-dashboard" class="back-link">⬅ Back to Admin Dashboard</a>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+:root {
+    --admin-dark: #1b3318; /* Darker green for Admin authority */
+    --primary-green: #2d5a27;
+    --accent-lime: #8bc34a;
+    --bg-soft: #f4f7f1;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-soft);
+    /* Soft gradient to add depth without an image */
+    background: radial-gradient(circle at center, #ffffff 0%, #e8f0e6 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-container {
+    background: white;
+    padding: 50px 40px;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+    width: 100%;
+    max-width: 360px;
+    text-align: center;
+    border-top: 5px solid var(--admin-dark); /* Admin distinction line */
+}
+
+h2 {
+    color: var(--admin-dark);
+    margin-bottom: 10px;
+    font-size: 24px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+p.subtitle {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 30px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+input {
+    padding: 14px 18px;
+    margin-bottom: 20px;
+    border: 2px solid #eee;
+    border-radius: 10px;
+    font-size: 15px;
+    font-family: inherit;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+input:focus {
+    border-color: var(--primary-green);
+    background-color: #f9fff8;
+}
+
+button {
+    background: var(--admin-dark);
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(27, 51, 24, 0.2);
+}
+
+button:hover {
+    background: var(--primary-green);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(27, 51, 24, 0.3);
+}
+
+/* Security Icon Placeholder */
+.icon-box {
+    width: 60px;
+    height: 60px;
+    background: #eef5ed;
+    color: var(--admin-dark);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    font-size: 24px;
+}
