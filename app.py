@@ -68,7 +68,8 @@ class OrderItem(db.Model):
     product = db.relationship('Product')
 
 
-
+with app.app_context():
+    db.create_all()
 
 
 def fine(s):
